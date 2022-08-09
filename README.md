@@ -1,67 +1,87 @@
-# atlas-utils: tools for microbiome data analysis
+###  atlas-utils: tools for microbiome data analysis
+<hr>
 
-### 1、Introduction
+#### 1. install
 
-    atlas-utils: tools for microbiome data analysis, using klib.
+```sh
+git clone https://github.com/jameslz/atlas-utils
+cd atlas-utils
+make
+```
 
 ### 2、 interface
 
-current: `version：0.0.1-r2`
+current: `version：0.0.2`
 
-    $ atlas-utils
-    
+
+```text
     Usage:   atlas-utils <command> <arguments>
-    Version: 0.0.1 r2
-    
+    Version: 0.0.2
+
     Command:
           -- Fastq manipulation.
              demultiplex       FASTAQ demultiplex with barcode sequence.
-             split             FASTAQ demultiplex with barcode without
-                               trimming barcode sequence.
-             uniques           Find unique sequences and abundances.
-             linkpairs         Link paired-reads with padding 'N'.
-             fqchk             Fastq QC (base/quality summary).
-             label             Add label to fasta headline.
-             barcode           Get barcode seq from paired-reads.
-             orient            Orient seq use strand +/- information.
-             primer_strip      Retrive sequence region matches to primer pair.
+             uniques           find unique sequences and abundances.
+             linkpairs         link paired-reads with padding 'N'.
+             fqchk             fastq QC (base/quality summary).
+             label             add label to fasta headline.
+             barcode           get barcode seq from paired-reads.
+             orient            orient seq use strand +/- information.
+             maxee             qualtiy control with quality error.
+             primer_strip      retrive sequence region matches to primer pair.
                                support single end match.
-    
+
           -- (Z)OTU manipulation.
-             unique_table     Construct uniques table using exact match.
-             annotation       Annotate OTU table using OTU assignment from Sintax/RDP.
+             unique_table     construct uniques table using exact match.
+             annotation       annotate OTU table using OTU assignment from Sintax/RDP.
              filter           1. Filter sequence from Mitochondria/Chloroplast, 2. optional filter
                               specifed taxon level .
-             level            Abundance table for specify taxonomy level. ie. genus.
-             abundance        Abundance table for specify taxonomy level and sample. ie. genus.
-             summary          Calcuate OTU number/Tag number per sample.
-             rowsum           Calcuate row sum.
-             rank             Rank/merge for numeric table.
-             krona            Convert annotated OTU table to krona text format.
-             quantile         Calcuate  nth quantile sample size for otu_table normalization.
-             mean_size        Calcuate 'Mean' sample size for otu_table normalization.
-             min_size         Calcuate 'Min' sample size for otu_table normalization.
-             max_size         Calcuate 'Max' sample size for otu_table normalization.
-             counts2freqs     Convert counts table from counts to frequencies.
-             trim             Delete low-abundance (Z)OTUs.
-             binary           Convert (Z)OTUs table to presence/absence values.
-             pairwise         Convert (Z)OTUs table to pairwise format for phylocom.
+             level            abundance table for specify taxonomy level. ie. genus.
+             abundance        abundance table for specify taxonomy level and sample. ie. genus.
+             summary          calcuate OTU number/Tag number per sample.
+             rowsum           calcuate row sum.
+             rank             rank/merge for numeric table.
+             krona            convert annotated OTU table to krona text format.
+             quantile         calcuate  nth quantile sample size for otu_table normalization.
+             mean_size        calcuate 'Mean' sample size for otu_table normalization.
+             min_size         calcuate 'Min' sample size for otu_table normalization.
+             max_size         calcuate 'Max' sample size for otu_table normalization.
+             counts2freqs     convert counts table from counts to frequencies.
+             trim             delete low-abundance (Z)OTUs with sum threshold.
+             prune            delete low-abundance (Z)OTUs.with per sample threshold
+             binary           convert (Z)OTUs table to presence/absence values.
+             pairwise         convert (Z)OTUs table to pairwise format for phylocom.
              rarity           rarity summary.
-             rare             Rarefy OTU table to specified number of reads.
+             rare             rarefy OTU table to specified number of reads.
+             core             core microbiome per/group.
              group_by         group_by operation for OTU table, support average, sum.
-    
+             flatten          flatten the zotu table taxonomy annotation.
+             unpack           unpack the sintax classify result.
+             lefse            convert to lefse compatibility format.
+             subgroup         retrieve columns in in list of columns.
+             hierarchy        hierarchy format for classic annotated OTU table.
+             cv               calcuate C.V|Coefficient of Variation.
+             fish             select OTUs using specifed abundance threshold.
+             stack            reshape OTU table for data visulization.
+
           -- PICRUSt.
-             normalization    Normalize OTU table with 16S copy Number, et..
-             melt             Calculate feature abundance. ie. KEGG, COG, with Greengene 13.5.
-             kann             Calculate feature abundance using feature maps, KO -> Module.
-    
+             normalization    normalize OTU table with 16S copy Number, et..
+             aggregate        merge same hits with sum opt.
+             contrib          calculate feature abundance contribution.
+             melt             calculate feature abundance. ie. KEGG, COG, with Greengene 13.5.
+             kann             calculate feature abundance using feature maps, KO -> Module.
+
           -- auxiliary utils.
-             view             View text file, ignor comments and blank lines.
-             getline          Get target line with headline.
-             subsamples       Get target columns with headline match.
-             partition        Split OTU table into specify number file.
+             view             view text file, ignor comments and blank lines.
+             getline          get target line with headline.
+             subsamples       get target columns with headline match.
+             partition        split OTU table into specify number file.
+             dt2xlsx          convert data table (multi-) file to Excel file..
+             strip            strip any char from first space in first columns.
+
 
     Licenced:
-    (c) 2019-2020 - LEI ZHANG
+    (c) 2019-2022 - LEI ZHANG
     Logic Informatics Co.,Ltd.
     zhanglei@logicinformatics.com
+```
