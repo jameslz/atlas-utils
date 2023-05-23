@@ -12,6 +12,7 @@ static khash_t(char) *map;
 static kvec_t(double) dv;
 static int cnt;
 static int abb   =  2;
+static int num   =  0;
 
 void level_assign_value(kstring_t *kt, kstring_t *assign, char level);
 void level_dv_zero (void);
@@ -22,12 +23,13 @@ void kh_level_destroy(khash_t(level) *h);
 void kh_level_init(void);
 
 int level_main(int argc, char *argv[]){
-    
+
     char level = 'g';
     int c;
-    while ((c = getopt(argc, argv, "l:n")) >= 0) {
+    while ((c = getopt(argc, argv, "l:nc")) >= 0) {
         if (c == 'l') level = optarg[0];
         else if(c == 'n') abb = 0;
+        else if(c == 'c') num = 1;
     }
 
     if ( optind == argc || argc != optind + 1) {
@@ -35,8 +37,10 @@ int level_main(int argc, char *argv[]){
         fprintf(stderr, "\nUsage: atlas-utils level [options] <otutab:annotated>\n\n");
         fprintf(stderr, "Options:\n");
         fprintf(stderr, "  -l  taxonomy level in [dkcofgs] Default:['g']\n");
-        fprintf(stderr, "  -n  print the raw label. such as 'p:Firmicutes'\n\n");
+        fprintf(stderr, "  -n  print the raw label. such as 'p:Firmicutes'\n");
+        fprintf(stderr, "  -c  count summarize flag. '\n\n");
         return 1;
+    
     } 
 
     khash_t(level) *h;
@@ -170,14 +174,17 @@ void level_dv_zero (void){
 void level_dv_print (int count, kstring_t *kt){
 
     int *fields, i, j, n;
-    
     fields = ksplit(kt, '\t', &n);
     level_dv_zero();
 
     for (i = 0; i < cnt; ++i)
         for (j = 0; j < count; ++j)
             kv_a(double, dv,  i) += atof(kt->s + fields[i + j * cnt]);
-    for (i = 0; i < cnt; ++i) printf("\t%.4g", kv_A(dv,  i));
+    if(num == 1)
+        for (i = 0; i < cnt; ++i) printf("\t%d", (int)kv_A(dv,  i));
+    else
+        for (i = 0; i < cnt; ++i) printf("\t%.4g", kv_A(dv,  i));
+
 
 }
 
